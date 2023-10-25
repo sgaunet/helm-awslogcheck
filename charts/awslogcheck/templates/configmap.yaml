@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "awslogcheck.fullname" . }}
+data:
+  cfg.yaml: |
+    ---
+    rulesdir: {{ .Values.configuration.rulesdir }}
+    smtp:
+      server: {{ .Values.configuration.smtp.server }}
+      port: {{ .Values.configuration.smtp.port }}
+      login: {{ .Values.configuration.smtp.login }}
+      password: {{ .Values.configuration.smtp.password }}
+      tls: {{ .Values.configuration.smtp.tls }}
+      maxreportsize: {{ .Values.configuration.smtp.maxreportsize }}
+    mailgun: 
+      domain: {{ .Values.configuration.mailgun.domain }}
+      apikey: {{ .Values.configuration.mailgun.apikey }}
+    mailconfiguration:
+      from_email: {{ .Values.configuration.mailconfiguration.from_email }}
+      sendto: {{ .Values.configuration.mailconfiguration.sendto }}
+      subject: {{ .Values.configuration.mailconfiguration.subject }}
+    aws_region: {{ .Values.configuration.aws_region }}
+    loggroup: {{ .Values.configuration.loggroup }}
+    debuglevel: {{ .Values.configuration.debuglevel }}
+
+    imagesToIgnore:
+      {{ toYaml .Values.configuration.imagesToIgnore | nindent 6 }}
+    containerNameToIgnore:
+      {{- toYaml .Values.configuration.containerNameToIgnore | nindent 6 }}

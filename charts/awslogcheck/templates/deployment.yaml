@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "awslogcheck.fullname" . }}
+  labels:
+    {{- include "awslogcheck.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.deploymentAnnotations -}}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "awslogcheck.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "awslogcheck.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      serviceAccountName: {{ include "awslogcheck.serviceAccountName" . }}
+      
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          volumeMounts:
+          - name: config-volume
+            mountPath: /opt/awslogcheck/cfg.yaml
+            subPath: cfg.yaml
+          - name: rules-volume
+            mountPath: /opt/awslogcheck/rules-perso
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "awslogcheck.fullname" . }}
+        - name: rules-volume
+          configMap:
+            name: {{ include "awslogcheck.fullname" . }}-rules
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

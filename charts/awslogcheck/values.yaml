@@ -1,0 +1,92 @@
+# Default values for awslogcheck.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: sgaunet/awslogcheck
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+deploymentAnnotations: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+podAnnotations: {}
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    memory: "150Mi"
+    cpu: "200m"
+  limits:
+    memory: "200Mi"
+    cpu: "200m"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+
+configuration:
+  rulesdir: "/opt/awslogcheck/rules-perso"
+  smtp:
+    server: ""
+    port: 465
+    login: ""
+    password: ""
+    tls: ""
+    maxreportsize: 10000000  # max size in bytes of report
+  mailgun: 
+    domain: ""
+    apikey: ""
+  mailconfiguration:
+    from_email: production@society.com
+    sendto: ""
+    subject: "awslogcheck"
+  aws_region: eu-west-3
+  loggroup: "/aws/containerinsights/dev-EKS/application"
+  debuglevel: "warn"
+
+  imagesToIgnore:
+    - fluent/fluentd-kubernetes-daemonset
+    - docker:stable
+    - docker:dind
+  containerNameToIgnore:
+    - aws-vpc-cni-init
+    - helper
+    - build
+    - cluster-autoscaler
+
+rules:
+  general.rules: |
+    warning
+    WARNING
+    level=info
+  autoscaler.rules: |
+    NodeGetCapabilities
+  http.rules: |
+    GET / HTTP/1.1" 302
+    GET / 200
