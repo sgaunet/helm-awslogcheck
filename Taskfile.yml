@@ -1,11 +1,8 @@
 # https://taskfile.dev
 version: '3'
-# vars:
-#   BINFILE: awslogcheck
-#   IMG: sgaunet/awslogcheck:latest
 
-# includes:
-#   dev: ./Taskfile_dev.yml
+includes:
+  dev: ./Taskfile_dev.yml
 
 tasks:
   default:
