@@ -53,33 +53,50 @@ affinity: {}
 configuration:
   rulesdir: "/opt/awslogcheck/rules-perso"
   smtp:
+    # configuration.smtp.server -- server
     server: ""
+    # configuration.smtp.port -- port
     port: 465
+    # configuration.smtp.login -- login
     login: ""
+    # configuration.smtp.password -- password
     password: ""
+    # configuration.smtp.tls -- tls
     tls: ""
+    # configuration.smtp.maxreportsize -- max size in bytes of report
     maxreportsize: 10000000  # max size in bytes of report
   mailgun: 
+    # configuration.mailgun.domain -- mailgun domain
     domain: ""
+    # configuration.mailgun.apikey -- mailgun api key
     apikey: ""
   mailconfiguration:
+    # configuration.mailconfiguration.from_email -- email address to send from
     from_email: production@society.com
+    # configuration.mailconfiguration.sendto -- email address to send to
     sendto: ""
+    # configuration.mailconfiguration.subject -- subject of the email
     subject: "awslogcheck"
+  # configuration.aws_region -- AWS region to use for AWS API calls
   aws_region: eu-west-3
+  # loggroup -- AWS CloudWatch log group to read from
   loggroup: "/aws/containerinsights/dev-EKS/application"
+  # debuglevel -- debug level
   debuglevel: "warn"
 
+  # configuration.imagesToIgnore -- images to ignore
   imagesToIgnore:
     - fluent/fluentd-kubernetes-daemonset
     - docker:stable
     - docker:dind
+  # configuration.containerNameToIgnore -- container name to ignore
   containerNameToIgnore:
     - aws-vpc-cni-init
     - helper
     - build
     - cluster-autoscaler
 
+# rules -- regexp to ignore
 rules:
   general.rules: |
     warning

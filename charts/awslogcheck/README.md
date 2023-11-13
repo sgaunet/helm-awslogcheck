@@ -1,6 +1,6 @@
 # awslogcheck
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.1](https://img.shields.io/badge/AppVersion-0.4.1-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.1](https://img.shields.io/badge/AppVersion-0.4.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -9,28 +9,23 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| configuration.aws_region | string | `"eu-west-3"` |  |
-| configuration.containerNameToIgnore[0] | string | `"aws-vpc-cni-init"` |  |
-| configuration.containerNameToIgnore[1] | string | `"helper"` |  |
-| configuration.containerNameToIgnore[2] | string | `"build"` |  |
-| configuration.containerNameToIgnore[3] | string | `"cluster-autoscaler"` |  |
+| configuration.aws_region | string | `"eu-west-3"` | AWS region to use for AWS API calls |
+| configuration.containerNameToIgnore | list | `["aws-vpc-cni-init","helper","build","cluster-autoscaler"]` | container name to ignore |
 | configuration.debuglevel | string | `"warn"` |  |
-| configuration.imagesToIgnore[0] | string | `"fluent/fluentd-kubernetes-daemonset"` |  |
-| configuration.imagesToIgnore[1] | string | `"docker:stable"` |  |
-| configuration.imagesToIgnore[2] | string | `"docker:dind"` |  |
+| configuration.imagesToIgnore | list | `["fluent/fluentd-kubernetes-daemonset","docker:stable","docker:dind"]` | images to ignore |
 | configuration.loggroup | string | `"/aws/containerinsights/dev-EKS/application"` |  |
-| configuration.mailconfiguration.from_email | string | `"production@society.com"` |  |
-| configuration.mailconfiguration.sendto | string | `""` |  |
-| configuration.mailconfiguration.subject | string | `"awslogcheck"` |  |
-| configuration.mailgun.apikey | string | `""` |  |
-| configuration.mailgun.domain | string | `""` |  |
+| configuration.mailconfiguration.from_email | string | `"production@society.com"` | email address to send from |
+| configuration.mailconfiguration.sendto | string | `""` | email address to send to |
+| configuration.mailconfiguration.subject | string | `"awslogcheck"` | subject of the email |
+| configuration.mailgun.apikey | string | `""` | mailgun api key |
+| configuration.mailgun.domain | string | `""` | mailgun domain |
 | configuration.rulesdir | string | `"/opt/awslogcheck/rules-perso"` |  |
-| configuration.smtp.login | string | `""` |  |
-| configuration.smtp.maxreportsize | int | `10000000` |  |
-| configuration.smtp.password | string | `""` |  |
-| configuration.smtp.port | int | `465` |  |
-| configuration.smtp.server | string | `""` |  |
-| configuration.smtp.tls | string | `""` |  |
+| configuration.smtp.login | string | `""` | login |
+| configuration.smtp.maxreportsize | int | `10000000` | max size in bytes of report |
+| configuration.smtp.password | string | `""` | password |
+| configuration.smtp.port | int | `465` | port |
+| configuration.smtp.server | string | `""` | server |
+| configuration.smtp.tls | string | `""` | tls |
 | deploymentAnnotations | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -45,9 +40,7 @@ A Helm chart for Kubernetes
 | resources.limits.memory | string | `"200Mi"` |  |
 | resources.requests.cpu | string | `"200m"` |  |
 | resources.requests.memory | string | `"150Mi"` |  |
-| rules."autoscaler.rules" | string | `"NodeGetCapabilities\n"` |  |
-| rules."general.rules" | string | `"warning\nWARNING\nlevel=info\n"` |  |
-| rules."http.rules" | string | `"GET / HTTP/1.1\" 302\nGET / 200"` |  |
+| rules | object | `{"autoscaler.rules":"NodeGetCapabilities\n","general.rules":"warning\nWARNING\nlevel=info\n","http.rules":"GET / HTTP/1.1\" 302\nGET / 200"}` | regexp to ignore |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
