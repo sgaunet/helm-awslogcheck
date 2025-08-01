@@ -1,6 +1,6 @@
 # awslogcheck
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.5.0](https://img.shields.io/badge/AppVersion-0.5.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.1](https://img.shields.io/badge/AppVersion-0.6.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -36,10 +36,7 @@ A Helm chart for Kubernetes
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| resources.limits.cpu | string | `"200m"` |  |
-| resources.limits.memory | string | `"200Mi"` |  |
-| resources.requests.cpu | string | `"200m"` |  |
-| resources.requests.memory | string | `"150Mi"` |  |
+| resources | object | `{}` |  |
 | rules | object | `{"autoscaler.rules":"NodeGetCapabilities\n","general.rules":"warning\nWARNING\nlevel=info\n","http.rules":"GET / HTTP/1.1\" 302\nGET / 200"}` | regexp to ignore |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
