@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   awslogcheck:
   - apiVersion: v2
+    appVersion: 0.6.2
+    created: "2025-09-25T20:28:07.955417577Z"
+    description: A Helm chart for Kubernetes
+    digest: 6bcef9be35b0de0afb584ee02c902ce55871558263b75cad9424523158fa1fa8
+    icon: view-source:https://raw.githubusercontent.com/sgaunet/helmchart-helper/main/ico/helm.ico
+    name: awslogcheck
+    type: application
+    urls:
+    - https://github.com/sgaunet/helm-awslogcheck/releases/download/awslogcheck-0.3.1/awslogcheck-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     appVersion: 0.6.1
     created: "2025-08-01T11:26:56.346513382Z"
     description: A Helm chart for Kubernetes
@@ -100,4 +111,4 @@ entries:
     urls:
     - https://github.com/sgaunet/helm-awslogcheck/releases/download/awslogcheck-0.1.0/awslogcheck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-01T11:26:56.346547316Z"
+generated: "2025-09-25T20:28:07.955534827Z"
